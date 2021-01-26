@@ -14,10 +14,11 @@ export const DashboardPage = (props) => {
     const workdayEndHour = '03';
     const workdayEndMinute = '00';
 
+    const [customDefaultName, setCustomName] = useState("Custom");
     const [customDefaultYear, setCustomYear] = useState(year);
     const [customDefaultMonth, setCustomMonth] = useState(month);
     const [customDefaultDay, setCustomDay] = useState(day);
-    const [customDefaultHour, setCustomHour] = useState('00');
+    const [customDefaultHour, setCustomHour] = useState('21');
     const [customDefaultMinute, setCustomMinute] = useState('00');
     const [customDefaultPeriod, setCustomPeriod] = useState('AM');
     
@@ -33,7 +34,8 @@ export const DashboardPage = (props) => {
                 </thead>
                 <thead>
                     <tr>
-                        <th>Workday ends at <br/>
+                        <th>
+                            Workday ends at <br/>
                             {workdayEndMonth + '.' }
                             {workdayEndDay + '.' }
                             {workdayEndYear + ' @ ' }
@@ -41,7 +43,8 @@ export const DashboardPage = (props) => {
                             workdayEndHour + ':' + workdayEndMinute + ' AM':
                             workdayEndHour -'12' + ':' + workdayEndMinute + ' PM'}
                         </th>
-                        <th><Countdowner date=
+                        <th>
+                            <Countdowner date=
                             {workdayEndHour > currentDate.getHours ? 
                             `${year}-${month}-${day}T${workdayEndHour}:${workdayEndMinute}:00`:
                             `${year}-${month}-${day+1}T${workdayEndHour}:${workdayEndMinute}:00`}/>    
@@ -50,18 +53,20 @@ export const DashboardPage = (props) => {
                 </thead>
                 <thead>
                     <tr>
-                        <th>Custom ends at <br/>
-                            <InlineEdit text={customDefaultMonth} onSetText={text => setCustomDay(text)} />.
-                            <InlineEdit text={customDefaultDay} onSetText={text => setCustomMonth(text)} />.
+                        <th>
+                            <InlineEdit text={customDefaultName} onSetText={text => setCustomName(text)} />{' '} 
+                            ends at <br/>
+                            <InlineEdit text={customDefaultMonth} onSetText={text => setCustomMonth(text)} />.
+                            <InlineEdit text={customDefaultDay} onSetText={text => setCustomDay(text)} />.
                             <InlineEdit text={customDefaultYear} onSetText={text => setCustomYear(text)} />{' @ '}
                             <InlineEdit text={customDefaultHour} onSetText={text => setCustomHour(text)} />:
                             <InlineEdit text={customDefaultMinute} onSetText={text => setCustomMinute(text)} />{' '}
                             <InlineEdit text={customDefaultPeriod} onSetText={text => setCustomPeriod(text)} />
                         </th>
-                        <th><Countdowner date=
-                            {customDefaultHour > currentDate.getHours ? 
-                                `${year}-${month}-${day}T${customDefaultHour}:${workdayEndMinute}:00`:
-                                `${year}-${month}-${day+1}T${customDefaultHour}:${workdayEndMinute}:00`}/></th>
+                        <th>
+                            <Countdowner date= {`${customDefaultYear}-${customDefaultMonth}-${customDefaultDay}T${customDefaultHour}:${customDefaultMinute}:00`}/>
+                            
+                        </th>
                     </tr>
                 </thead>
             </Table>
