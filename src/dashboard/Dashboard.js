@@ -8,10 +8,10 @@ export const DashboardPage = (props) => {
     const year = (currentDate.getFullYear());
     const month = (currentDate.getMonth() < 10 ? currentDate.getMonth()+'1' : currentDate.getMonth());
     const day = (currentDate.getDate());
-    const workdayEndHour = '16';
+    const workdayEndHour = '03';
     const workdayEndMinute = '00';
 
-    const [customDefaultHour, setCustomHour] = useState('12');
+    const [customDefaultHour, setCustomHour] = useState('00');
     const [customDefaultMinute, setCustomMinute] = useState('00');
     const [customDefaultPeriod, setCustomPeriod] = useState('AM');
     
@@ -39,7 +39,10 @@ export const DashboardPage = (props) => {
                             workdayEndHour -'12' + ':' + workdayEndMinute + ' PM'}
                         </th>
                         <th><Countdowner date=
-                            {`${year}-${month}-${day}T${workdayEndHour}:${workdayEndMinute}:00`}/></th>
+                            {workdayEndHour > currentDate.getHours ? 
+                            `${year}-${month}-${day}T${workdayEndHour}:${workdayEndMinute}:00`:
+                            `${year}-${month}-${day+1}T${workdayEndHour}:${workdayEndMinute}:00`}/>    
+                        </th>
                     </tr>
                 </thead>
                 <thead>
@@ -50,7 +53,9 @@ export const DashboardPage = (props) => {
                             <InlineEdit text={customDefaultPeriod} onSetText={text => setCustomPeriod(text)} />
                         </th>
                         <th><Countdowner date=
-                            {`${year}-${month}-${day}T${workdayEndHour}:${workdayEndMinute}:00`}/></th>
+                            {customDefaultHour > currentDate.getHours ? 
+                                `${year}-${month}-${day}T${customDefaultHour}:${workdayEndMinute}:00`:
+                                `${year}-${month}-${day+1}T${customDefaultHour}:${workdayEndMinute}:00`}/></th>
                     </tr>
                 </thead>
             </Table>
