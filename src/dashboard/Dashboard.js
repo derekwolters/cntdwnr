@@ -54,13 +54,13 @@ export const DashboardPage = (props) => {
                 <thead>
                     <tr>
                         <th>
-                            <InlineEdit text={customDefaultName} onSetText={text => setCustomName(text)} />{' '} 
+                            <InlineEdit text={customDefaultName} onSetText={text => setCustomName(text)} />     {' '} 
                             ends at <br/>
-                            <InlineEdit text={customDefaultMonth} onSetText={text => setCustomMonth(text)} />.
-                            <InlineEdit text={customDefaultDay} onSetText={text => setCustomDay(text)} />.
-                            <InlineEdit text={customDefaultYear} onSetText={text => setCustomYear(text)} />{' @ '}
-                            <InlineEdit text={customDefaultHour} onSetText={text => setCustomHour(text)} />:
-                            <InlineEdit text={customDefaultMinute} onSetText={text => setCustomMinute(text)} />{' '}
+                            <InlineEdit text={customDefaultMonth} onSetText={text => setCustomMonth(text)} />   .
+                            <InlineEdit text={customDefaultDay} onSetText={text => setCustomDay(text)} />       .
+                            <InlineEdit text={customDefaultYear} onSetText={text => setCustomYear(text)} />     {' @ '}
+                            <InlineEdit text={customDefaultHour} onSetText={text => setCustomHour(text)} />     :
+                            <InlineEdit text={customDefaultMinute} onSetText={text => setCustomMinute(text)} /> {' '}
                             <InlineEdit text={customDefaultPeriod} onSetText={text => setCustomPeriod(text)} />
                         </th>
                         <th>
