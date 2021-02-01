@@ -52,14 +52,17 @@ class Countdowner extends Component {
       diff -= timeLeft.years * 365.25 * 86400;
     }
     if (diff >= 86400) { // 24 * 60 * 60
+      console.log("days");
       timeLeft.days = Math.floor(diff / 86400);
       diff -= timeLeft.days * 86400;
     }
     if (diff >= 3600) { // 60 * 60
+      console.log("hours");
       timeLeft.hours = Math.floor(diff / 3600);
       diff -= timeLeft.hours * 3600;
     }
     if (diff >= 60) {
+      console.log("min");
       timeLeft.min = Math.floor(diff / 60);
       diff -= timeLeft.min * 60;
     }
@@ -74,7 +77,8 @@ class Countdowner extends Component {
 
   addLeadingZeros(value) {
     value = String(value);
-    while (value.length < 2) {
+    console.log(value);
+    while (value.length < 2 && value != 0) {
       value = '0' + value;
     }
     return value;
@@ -92,6 +96,7 @@ class Countdowner extends Component {
           </span>
         </span>
 
+
         <span className="Countdown-col">
           <span className="Countdown-col-element">
             <strong>{this.addLeadingZeros(countDown.hours)}</strong>
@@ -107,12 +112,12 @@ class Countdowner extends Component {
           </span>
         </span>
 
-        <span className="Countdown-col">
+        {/* <span className="Countdown-col">
           <span className="Countdown-col-element">
             <strong>{this.addLeadingZeros(countDown.sec)}</strong>
             <span> Sec </span>
           </span>
-        </span>
+        </span> */}
       </div>
     );
   }
