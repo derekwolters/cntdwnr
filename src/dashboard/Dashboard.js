@@ -4,9 +4,22 @@ import Countdowner from '../timer/countdowner';
 import InlineEdit from "./InlineEdit";
 
 const addZero = (value) => {
-    value = String(value).padStart(2,"0");    
+    if (String(value).length < 2)
+        value = String(value).padStart(2,"0");
+
     return value;
 }
+
+const limiter = (defaultValue, newValue, maxNumber) => {
+    if (newValue > maxNumber)
+        return defaultValue;
+
+    return newValue;
+}
+
+const daysInMonth = (month, year) => { 
+    return new Date(year, month, 0).getDate(); 
+} 
 
 export const DashboardPage = (props) => {
     {/**Base timer variables */}
@@ -69,17 +82,50 @@ export const DashboardPage = (props) => {
                 <thead>
                     <tr>
                         <th>
-                            <InlineEdit text={customDefaultName} onSetText={text => setCustomName(text)} />     {' '} 
+                            <InlineEdit 
+                            text={customDefaultName} 
+                            onSetText={text => 
+                            setCustomName(text)} />{' '} 
                             ends at <br/>
-                            <InlineEdit text={customDefaultMonth} onSetText={text => setCustomMonth(text)} />   .
-                            <InlineEdit text={customDefaultDay} onSetText={text => setCustomDay(text)} />       .
-                            <InlineEdit text={customDefaultYear} onSetText={text => setCustomYear(text)} />     {' @ '}
-                            <InlineEdit text={customDefaultHour} onSetText={text => setCustomHour(text)} />     :
-                            <InlineEdit text={customDefaultMinute} onSetText={text => setCustomMinute(text)} /> {' '}
-                            <InlineEdit text={customDefaultPeriod} onSetText={text => setCustomPeriod(text)} />
+                            <InlineEdit 
+                            text={customDefaultMonth} 
+                            onSetText={text => 
+                                setCustomMonth(
+                                    addZero(
+                                        limiter(customDefaultMonth, text, 12)))} />.
+                            <InlineEdit 
+                            text={customDefaultDay} 
+                            onSetText={text => 
+                            setCustomDay(
+                                addZero(
+                                    limiter(customDefaultDay, text, 
+                                    daysInMonth(customDefaultMonth,customDefaultYear))))} />.
+                            <InlineEdit 
+                            text={customDefaultYear} 
+                            onSetText={text => 
+                            setCustomYear(
+                                limiter(customDefaultYear, text, year+2))} />{' at '}
+                            <InlineEdit 
+                            text={customDefaultHour} 
+                            onSetText={text => 
+                            setCustomHour(
+                                addZero(
+                                    limiter(customDefaultHour, text, 12)))} />:
+                            <InlineEdit 
+                            text={customDefaultMinute} 
+                            onSetText={text => 
+                            setCustomMinute(
+                                addZero(
+                                    limiter(customDefaultMinute, text, 59)))} /> {' '}
+                            <InlineEdit 
+                            text={customDefaultPeriod} 
+                            onSetText={text => 
+                            setCustomPeriod(text)} />
                         </th>
                         <th>
-                            <Countdowner name='custom' date= {`${customDefaultYear}-${customDefaultMonth}-${customDefaultDay}T${customDefaultHour}:${customDefaultMinute}:00`}/>
+                            <Countdowner 
+                                name='custom' 
+                                date={`${customDefaultYear}-${customDefaultMonth}-${customDefaultDay}T${customDefaultHour}:${customDefaultMinute}:00`}/>
                             
                         </th>
                     </tr>
