@@ -12,6 +12,8 @@ class Countdowner extends Component {
   constructor(props) {
     super(props);
 
+    console.log(props);
+    
     this.state = {
       days: 0,
       hours: 0,
@@ -19,11 +21,25 @@ class Countdowner extends Component {
       sec: 0,
     }
   }
+  ///GET THIS WORKING!
+  /* addIncomingZeros(time) {
+    var incomingDate = new Date();
+    //incomingDate = time;
+    console.log(incomingDate.getFullYear());
+    let years = incomingDate.getFullYear;
+    let months = incomingDate.getMonth.length() < 2 ? 0+incomingDate.getMonth : incomingDate.getMonth;
+    let days = incomingDate.getDate.length() < 2 ? 0+incomingDate.getDate : incomingDate.getDate;
+    let hours = incomingDate.getHours.length() < 2 ? 0+incomingDate.getHours : incomingDate.getHours;
+    let minutes = incomingDate.getMinutes.length() < 2 ? 0+incomingDate.getMinutes : incomingDate.getMinutes;
+    let seconds = incomingDate.getSeconds.length() < 2 ? 0+incomingDate.getSeconds : incomingDate.getSeconds;
+    return `${years}-${months}-${days}T${hours}:${minutes}:${seconds}`;
+  } */
 
   componentDidMount() {
     // update every second
     this.interval = setInterval(() => {
       const date = this.calculateCountdown(this.props.date);
+      console.log(this.props.name + ' calcCountdown: ' + this.props.date)
       date ? this.setState(date) : this.stop();
     }, 1000);
   }
@@ -33,8 +49,12 @@ class Countdowner extends Component {
   }
 
   calculateCountdown(endDate) {
+    console.log(this.props.name + ' endDate-actual:'+ endDate);
     let diff = (Date.parse(new Date(endDate)) - Date.parse(new Date())) / 1000;
-
+    console.log(this.props.name + ' endDate:'+ Date.parse(new Date(endDate)))
+    console.log(this.props.name + ' 2nd half:'+ (Date.parse(new Date())) / 1000);
+    console.log(this.props.name + ' diff: ' + diff)
+    
     // clear countdown when date is reached
     if (diff <= 0) return false;
 
@@ -52,17 +72,14 @@ class Countdowner extends Component {
       diff -= timeLeft.years * 365.25 * 86400;
     }
     if (diff >= 86400) { // 24 * 60 * 60
-      console.log("days");
       timeLeft.days = Math.floor(diff / 86400);
       diff -= timeLeft.days * 86400;
     }
     if (diff >= 3600) { // 60 * 60
-      console.log("hours");
       timeLeft.hours = Math.floor(diff / 3600);
       diff -= timeLeft.hours * 3600;
     }
     if (diff >= 60) {
-      console.log("min");
       timeLeft.min = Math.floor(diff / 60);
       diff -= timeLeft.min * 60;
     }
@@ -77,8 +94,7 @@ class Countdowner extends Component {
 
   addLeadingZeros(value) {
     value = String(value);
-    console.log(value);
-    while (value.length < 2 && value != 0) {
+    while (value.length < 2) {
       value = '0' + value;
     }
     return value;
