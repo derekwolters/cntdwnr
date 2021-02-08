@@ -11,7 +11,16 @@ const addZero = (value) => {
 }
 
 const limiter = (defaultValue, newValue, maxNumber) => {
-    if (newValue > maxNumber)
+    if (newValue > maxNumber) {
+        return defaultValue;
+    }
+
+    return newValue;
+}
+
+const limiterPeriod = (defaultValue, newValue) => {
+    newValue = String(newValue.toUpperCase());
+    if (newValue !== 'AM' && newValue !== 'PM')
         return defaultValue;
 
     return newValue;
@@ -20,6 +29,13 @@ const limiter = (defaultValue, newValue, maxNumber) => {
 const daysInMonth = (month, year) => { 
     return new Date(year, month, 0).getDate(); 
 } 
+
+const amOrPm = (hour, period) => {
+    if (String(period.toUpperCase()) === 'PM')
+        return String(parseInt(hour)+12);
+
+    return hour;
+}
 
 export const DashboardPage = (props) => {
     {/**Base timer variables */}
@@ -35,18 +51,16 @@ export const DashboardPage = (props) => {
     const workdayEndDay = day;
     const workdayEndHour = '03';
     const workdayEndMinute = '00';
-    console.log('currentDate'); console.log(currentDate);
 
     {/**Custom timer variables */}
     const [customDefaultName, setCustomName] = useState("Custom");
     const [customDefaultYear, setCustomYear] = useState(year);
     const [customDefaultMonth, setCustomMonth] = useState(month);
     const [customDefaultDay, setCustomDay] = useState(day);
-    const [customDefaultHour, setCustomHour] = useState('18');
+    const [customDefaultHour, setCustomHour] = useState('06');
     const [customDefaultMinute, setCustomMinute] = useState('30');
     const [customDefaultPeriod, setCustomPeriod] = useState('PM');
-    console.log('MONTH: '+month)
-    console.log('DAY: '+day)
+
     return (
         <div className="container mgntop">
             {/* <h2>Cntdwnr Dashboard</h2>  */}
@@ -118,15 +132,15 @@ export const DashboardPage = (props) => {
                                 addZero(
                                     limiter(customDefaultMinute, text, 59)))} /> {' '}
                             <InlineEdit 
-                            text={customDefaultPeriod} 
+                            text={customDefaultPeriod}
                             onSetText={text => 
-                            setCustomPeriod(text)} />
+                            setCustomPeriod(
+                                limiterPeriod(customDefaultPeriod, text))} />
                         </th>
                         <th>
                             <Countdowner 
                                 name='custom' 
-                                date={`${customDefaultYear}-${customDefaultMonth}-${customDefaultDay}T${customDefaultHour}:${customDefaultMinute}:00`}/>
-                            
+                                date={`${customDefaultYear}-${customDefaultMonth}-${customDefaultDay}T${amOrPm(customDefaultHour,customDefaultPeriod)}:${customDefaultMinute}:00`}/>
                         </th>
                     </tr>
                 </thead>
